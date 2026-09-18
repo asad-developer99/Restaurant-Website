@@ -3,6 +3,10 @@
 An ultra-premium, scroll-driven interactive dining website showcasing culinary craft through deconstruction motion canvases, fluid vertical slat transitions, and responsive editorial typography.
 
 ---
+## ✨ LIVE PRIVIEW:
+https://restaurant-website-three-ivory.vercel.app/
+---
+
 
 ## ✨ Features & Highlights
 

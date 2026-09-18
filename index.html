@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>L'Artisan | Restaurant</title>
+  
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  
+  <!-- Google Fonts: Josefin Sans (Display) | Lexend | Montserrat | Outfit | Dancing Script (Cursive) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Lexend:wght@100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="style.css?v=57">
+  <style>
+    /* Zero shadows on signature food images */
+    .food-png-shadow { display: none !important; }
+    .food-png-wrapper { background: transparent !important; box-shadow: none !important; }
+    .food-png-img, .signature-item:hover .food-png-img { filter: none !important; }
+  </style>
+  <!-- GSAP Core Library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+</head>
+<body>
+
+  <!-- Global Loader -->
+  <div class="canvas-loader" id="canvas-loader">
+    <div class="loader-spinner"></div>
+  </div>
+
+  <!-- Persistent Floating Luxury Glassmorphism Navbar -->
+  <nav class="floating-nav" id="floating-nav" aria-label="Main Navigation">
+    <div class="nav-inner">
+      <a href="#" class="nav-brand" id="nav-brand-link">
+        <div class="nav-icon">
+          <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="22" cy="22" r="20.5" stroke="#dfc181" stroke-width="2"/>
+            <path d="M16 11V18C16 19.5 17 20.5 18.5 20.5V33" stroke="#dfc181" stroke-width="1.8" stroke-linecap="round"/>
+            <path d="M18.5 11V17" stroke="#dfc181" stroke-width="1.8" stroke-linecap="round"/>
+            <path d="M21 11V18C21 19.5 20 20.5 18.5 20.5" stroke="#dfc181" stroke-width="1.8" stroke-linecap="round"/>
+            <path d="M25 11C27.8 13.2 28.2 17.5 28.2 20.5H24.5V33" stroke="#dfc181" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="nav-title-group">
+          <span class="nav-title">L'ARTISAN</span>
+          <span class="nav-sub">WORKSHOP</span>
+        </div>
+      </a>
+      <div class="nav-links">
+        <button type="button" class="nav-link-btn" data-target="track-1">WORKSHOP</button>
+        <button type="button" class="nav-link-btn" data-target="track-2">PIZZA</button>
+        <button type="button" class="nav-link-btn" data-target="track-3-story">PHILOSOPHY</button>
+        <button type="button" class="nav-link-btn" data-target="track-3-signatures">SIGNATURES</button>
+        <button type="button" class="nav-link-btn" data-target="track-3-degustation">TASTING</button>
+      </div>
+      <button type="button" class="nav-reserve-cta" id="nav-reserve-btn">
+        <span>BOOK TABLE</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Master Fixed Viewport Stage -->
+  <div class="viewport-stage" id="viewport-stage">
+    <!-- Restaurant Brand Header (Hero Section Only) -->
+    <header class="brand-header" id="brand-header">
+      <div class="brand-brandmark">
+        <div class="brand-icon">
+          <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Fine Dining Cutlery Crest -->
+            <circle cx="22" cy="22" r="20.5" stroke="#121316" stroke-width="2.2"/>
+            <!-- Fork -->
+            <path d="M16 11V18C16 19.5 17 20.5 18.5 20.5V33" stroke="#121316" stroke-width="2" stroke-linecap="round"/>
+            <path d="M18.5 11V17" stroke="#121316" stroke-width="2" stroke-linecap="round"/>
+            <path d="M21 11V18C21 19.5 20 20.5 18.5 20.5" stroke="#121316" stroke-width="2" stroke-linecap="round"/>
+            <!-- Knife -->
+            <path d="M25 11C27.8 13.2 28.2 17.5 28.2 20.5H24.5V33" stroke="#121316" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+
+        <div class="brand-text">
+          <span class="brand-title">L'ARTISAN</span>
+          <span class="brand-subtitle">RESTAURANT</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Section 1 Canvas: Burger Atelier -->
+    <canvas id="burger-canvas" class="section-canvas"></canvas>
+
+    <!-- Stage 1.1: Left (Initial View - Goes UP when scrolling starts) -->
+    <div class="editorial-stage stage-left" id="text-stage-1">
+      <div class="editorial-headline">
+        <span class="headline-big" id="hero-crafted-text" aria-label="CRAFTED"><span class="char">C</span><span class="char">R</span><span class="char">A</span><span class="char">F</span><span class="char">T</span><span class="char">E</span><span class="char">D</span></span>
+        <span class="headline-cursive" id="hero-perfection-text">to perfection</span>
+      </div>
+    </div>
+
+    <!-- Stage 1.2: Right (Comes UP from down as Sesame Bun lifts) -->
+    <div class="editorial-stage stage-right" id="text-stage-2">
+      <div class="editorial-headline">
+        <span class="headline-big">GOLDEN</span>
+        <span class="headline-cursive">brioche bun</span>
+      </div>
+    </div>
+
+    <!-- Stage 1.3: Left (Comes UP from down as Cheese melts) -->
+    <div class="editorial-stage stage-left" id="text-stage-3">
+      <div class="editorial-headline">
+        <span class="headline-big">SMOKED</span>
+        <span class="headline-cursive">aged cheddar</span>
+      </div>
+    </div>
+
+    <!-- Stage 1.4: Right (Comes UP from down as Angus Patty hovers) -->
+    <div class="editorial-stage stage-right" id="text-stage-4">
+      <div class="editorial-headline">
+        <span class="headline-big">FLAME</span>
+        <span class="headline-cursive">seared angus</span>
+      </div>
+    </div>
+
+    <!-- Stage 1.5: Left (Comes UP from down for final assembled produce & base) -->
+    <div class="editorial-stage stage-left" id="text-stage-5">
+      <div class="editorial-headline">
+        <span class="headline-big">SAVOR</span>
+        <span class="headline-cursive">every layer</span>
+      </div>
+    </div>
+
+    <!-- 5-Part Vertical Slat Transition Curtain (Yellow Only) -->
+    <div class="transition-slats-curtain" id="transition-slats">
+      <div class="slat" id="slat-0"></div>
+      <div class="slat" id="slat-1"></div>
+      <div class="slat" id="slat-2"></div>
+      <div class="slat" id="slat-3"></div>
+      <div class="slat" id="slat-4"></div>
+    </div>
+
+    <!-- Section 2 Canvas: Stone-Fired Pizza (Revealed when slats add up) -->
+    <canvas id="pizza-canvas" class="section-canvas"></canvas>
+
+    <!-- Section 2 Editorial Text Stages: Stone-Fired Pizza -->
+    <!-- Stage 2.1: Left (Initial View - Appears with Pizza Photo) -->
+    <div class="editorial-stage stage-left pizza-stage" id="text-pizza-1">
+      <div class="editorial-headline">
+        <span class="headline-big">STONE-FIRED</span>
+        <span class="headline-cursive">artisanal crust</span>
+      </div>
+    </div>
+
+    <!-- Stage 2.2: Right (Comes UP as crust and sauce separate) -->
+    <div class="editorial-stage stage-right pizza-stage" id="text-pizza-2">
+      <div class="editorial-headline">
+        <span class="headline-big">SAN MARZANO</span>
+        <span class="headline-cursive">crushed tomatoes</span>
+      </div>
+    </div>
+
+    <!-- Stage 2.3: Left (Comes UP as rich melted cheese elevates) -->
+    <div class="editorial-stage stage-left pizza-stage" id="text-pizza-3">
+      <div class="editorial-headline">
+        <span class="headline-big">FIOR DI LATTE</span>
+        <span class="headline-cursive">pulled mozzarella</span>
+      </div>
+    </div>
+
+    <!-- Stage 2.4: Right (Comes UP as wood-smoked cured toppings hover) -->
+    <div class="editorial-stage stage-right pizza-stage" id="text-pizza-4">
+      <div class="editorial-headline">
+        <span class="headline-big">RUSTIC SALAME</span>
+        <span class="headline-cursive">wood-smoked spice</span>
+      </div>
+    </div>
+
+    <!-- Stage 2.5: Left (Final deconstructed culinary crescendo) -->
+    <div class="editorial-stage stage-left pizza-stage" id="text-pizza-5">
+      <div class="editorial-headline">
+        <span class="headline-big">INFUSED</span>
+        <span class="headline-cursive">with pure passion</span>
+      </div>
+    </div>
+    <!-- Next Section: Deep Emerald / Midnight Teal Wavy Section -->
+    <section class="next-wave-section" id="next-section" aria-label="Next Section">
+      <div class="wavy-top-divider">
+        <svg class="wavy-svg" viewBox="0 0 390 160" preserveAspectRatio="none" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="emerald-teal-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#082a24" />
+              <stop offset="50%" stop-color="#051d19" />
+              <stop offset="100%" stop-color="#010908" />
+            </linearGradient>
+          </defs>
+          <path d="M0,80 C5,95 15,55 30,75 C60,115 90,35 120,75 C150,115 180,45 210,80 C240,115 270,40 300,75 C330,110 360,50 390,80 L390,160 L0,160 Z" fill="url(#emerald-teal-gradient)"></path>
+        </svg>
+      </div>
+      <div class="next-section-body" id="next-section-body">
+        <div class="editorial-showcase" id="editorial-showcase">
+          <div class="editorial-lead">
+            <span class="editorial-badge">THE ARTISAN WORKSHOP</span>
+            <h2 class="editorial-hero-title anim-section-title" aria-label="MEMORIES OF THE TABLE">
+              <span class="anim-word-mask"><span class="anim-word-inner">MEMORIES</span></span>
+              <span class="anim-word-mask"><span class="anim-word-inner">OF</span></span>
+              <span class="anim-word-mask"><span class="anim-word-inner">THE</span></span>
+              <span class="anim-word-mask"><span class="anim-word-inner">TABLE</span></span>
+            </h2>
+          </div>
+
+          <!-- AccordionGallery — hover to expand each panel with parallax imagery -->
+          <div
+            class="accordion-gallery"
+            id="accordion-gallery"
+            role="list"
+            aria-label="Image accordion gallery"
+          >
+            <!-- Panel 1: Chef's Craft -->
+            <a class="ag-panel" href="#" role="listitem" tabindex="0" aria-label="The Craft" data-index="0">
+              <span class="ag-panel__frame">
+                <span class="ag-panel__media">
+                  <img src="assets/chef_craft.jpg" alt="Michelin chef plating delicate pan-seared scallop" draggable="false">
+                </span>
+                <span class="ag-panel__overlay" aria-hidden="true"></span>
+              </span>
+              <span class="ag-panel__label" aria-hidden="true">
+                <span class="ag-panel__bar"></span>
+                <span class="ag-panel__text">The Craft</span>
+              </span>
+            </a>
+
+            <!-- Panel 2: Artisan Dessert -->
+            <a class="ag-panel" href="#" role="listitem" tabindex="0" aria-label="Noir &amp; Gold" data-index="1">
+              <span class="ag-panel__frame">
+                <span class="ag-panel__media">
+                  <img src="assets/artisan_dessert.jpg" alt="Artisanal dark chocolate creation with gold leaf and blackberries" draggable="false">
+                </span>
+                <span class="ag-panel__overlay" aria-hidden="true"></span>
+              </span>
+              <span class="ag-panel__label" aria-hidden="true">
+                <span class="ag-panel__bar"></span>
+                <span class="ag-panel__text">Noir &amp; Gold</span>
+              </span>
+            </a>
+
+            <!-- Panel 3: Cheesecake (default active) -->
+            <a class="ag-panel ag-panel--active" href="#" role="listitem" tabindex="0" aria-label="Basque Velvet" aria-current="true" data-index="2">
+              <span class="ag-panel__frame">
+                <span class="ag-panel__media">
+                  <img src="assets/souv_cheesecake.jpg" alt="Basque burnt cheesecake with berry coulis and edible blossom" draggable="false">
+                </span>
+                <span class="ag-panel__overlay" aria-hidden="true"></span>
+              </span>
+              <span class="ag-panel__label" aria-hidden="true">
+                <span class="ag-panel__bar"></span>
+                <span class="ag-panel__text">Basque Velvet</span>
+              </span>
+            </a>
+
+            <!-- Panel 4: Gastronomy Dish -->
+            <a class="ag-panel" href="#" role="listitem" tabindex="0" aria-label="Terroir Botanique" data-index="3">
+              <span class="ag-panel__frame">
+                <span class="ag-panel__media">
+                  <img src="assets/gastronomy_dish.jpg" alt="Signature gastronomy dish" draggable="false">
+                </span>
+                <span class="ag-panel__overlay" aria-hidden="true"></span>
+              </span>
+              <span class="ag-panel__label" aria-hidden="true">
+                <span class="ag-panel__bar"></span>
+                <span class="ag-panel__text">Terroir Botanique</span>
+              </span>
+            </a>
+
+            <!-- Panel 5: Flame Macro -->
+            <a class="ag-panel" href="#" role="listitem" tabindex="0" aria-label="Flame &amp; Copper" data-index="4">
+              <span class="ag-panel__frame">
+                <span class="ag-panel__media">
+                  <img src="assets/chef_flame_macro.jpg" alt="Hearth flame craft" draggable="false">
+                </span>
+                <span class="ag-panel__overlay" aria-hidden="true"></span>
+              </span>
+              <span class="ag-panel__label" aria-hidden="true">
+                <span class="ag-panel__bar"></span>
+                <span class="ag-panel__text">Flame &amp; Copper</span>
+              </span>
+            </a>
+          </div><!-- /.accordion-gallery -->
+        </div>
+
+        <!-- ============================================================
+             SECTION 4: SIGNATURE CREATIONS (ORGANIC FLOATING PNG FOOD)
+             Zero unnecessary boxes/borders - pure imagery, shadows, Poppins & Cursive
+             ============================================================ -->
+        <section class="signature-section" id="signature-section" aria-label="Signature Culinary Creations">
+          
+          <!-- Background with vertical wavy separation (Yellow on Left, Dark Emerald-Teal Gradient on Right) -->
+          <div class="signature-wavy-bg" aria-hidden="true">
+            <svg class="sig-wavy-svg" viewBox="0 0 1000 2000" preserveAspectRatio="none" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="signature-dark-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#082a24" />
+                  <stop offset="50%" stop-color="#051d19" />
+                  <stop offset="100%" stop-color="#010908" />
+                </linearGradient>
+              </defs>
+              <!-- Right side: Gradient color used before for the bg -->
+              <rect width="1000" height="2000" fill="url(#signature-dark-grad)" />
+              <!-- Left side: Yellow color used for the site -->
+              <path d="M 0,0 L 500.0,0 C 545.0,54.3 545.0,88.6 500.0,142.9 C 455.0,197.1 455.0,231.4 500.0,285.7 C 545.0,340.0 545.0,374.3 500.0,428.6 C 455.0,482.9 455.0,517.1 500.0,571.4 C 545.0,625.7 545.0,660.0 500.0,714.3 C 455.0,768.6 455.0,802.9 500.0,857.1 C 545.0,911.4 545.0,945.7 500.0,1000.0 C 455.0,1054.3 455.0,1088.6 500.0,1142.9 C 545.0,1197.1 545.0,1231.4 500.0,1285.7 C 455.0,1340.0 455.0,1374.3 500.0,1428.6 C 545.0,1482.9 545.0,1517.1 500.0,1571.4 C 455.0,1625.7 455.0,1660.0 500.0,1714.3 C 545.0,1768.6 545.0,1802.9 500.0,1857.1 C 455.0,1911.4 455.0,1945.7 500.0,2000.0 L 0,2000 Z" fill="#F5C03E" />
+              <!-- Vertical wavy separation line -->
+              <path d="M 500.0,0 C 545.0,54.3 545.0,88.6 500.0,142.9 C 455.0,197.1 455.0,231.4 500.0,285.7 C 545.0,340.0 545.0,374.3 500.0,428.6 C 455.0,482.9 455.0,517.1 500.0,571.4 C 545.0,625.7 545.0,660.0 500.0,714.3 C 455.0,768.6 455.0,802.9 500.0,857.1 C 545.0,911.4 545.0,945.7 500.0,1000.0 C 455.0,1054.3 455.0,1088.6 500.0,1142.9 C 545.0,1197.1 545.0,1231.4 500.0,1285.7 C 455.0,1340.0 455.0,1374.3 500.0,1428.6 C 545.0,1482.9 545.0,1517.1 500.0,1571.4 C 455.0,1625.7 455.0,1660.0 500.0,1714.3 C 545.0,1768.6 545.0,1802.9 500.0,1857.1 C 455.0,1911.4 455.0,1945.7 500.0,2000.0" fill="none" stroke="#dfc181" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </div>
+
+          <div class="signature-container">
+            <div class="signature-header">
+              <span class="signature-cursive">Handcrafted with passion</span>
+              <h2 class="signature-headline anim-section-title" aria-label="SIGNATURE CREATIONS">
+                <span class="anim-word-mask"><span class="anim-word-inner">SIGNATURE</span></span>
+                <span class="anim-word-mask"><span class="anim-word-inner">CREATIONS</span></span>
+              </h2>
+              <p class="signature-sub">Every plate is an intimate dialogue between fire, heritage produce, and uncompromised culinary vision.</p>
+            </div>
+
+            <div class="signature-items-container">
+             <!-- Food Item 1: Double Wagyu Brioche Smash (PNG with Realistic Shadow) -->
+            <div class="signature-item item-left" data-speed="0.85">
+              <div class="food-png-wrapper" data-tilt>
+                <img src="assets/burger_item.png?v=4" alt="Handcrafted Double Wagyu Burger" class="food-png-img" loading="eager">
+              </div>
+              <div class="signature-info">
+                <span class="item-cursive">The Alchemist's Hearth</span>
+                <h3 class="item-title">DOUBLE WAGYU SMASH</h3>
+                <p class="item-desc">Double seared A5 Wagyu beef patties, melted 18-month aged cheddar cascade, crispy smoked pancetta, shallot jam, and black truffle emulsion nestled inside a toasted black sesame brioche.</p>
+                <div class="item-meta">
+                  <span class="item-tag">CHEF'S SELECTION</span>
+                  <span class="item-price">€ 34</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Food Item 2: Black Truffle Tagliolini (PNG with Realistic Shadow) -->
+            <div class="signature-item item-right" data-speed="1.15">
+              <div class="signature-info">
+                <span class="item-cursive">From the Hills of Alba</span>
+                <h3 class="item-title">TARTUFO NERO D'ALBA</h3>
+                <p class="item-desc">Freshly extruded egg tagliolini, slow-churned Normandy cultured butter, 36-month Vacche Rosse Parmigiano, finished tableside with generous shavings of wild black summer truffles.</p>
+                <div class="item-meta">
+                  <span class="item-tag">HANDMADE PASTA</span>
+                  <span class="item-price">€ 42</span>
+                </div>
+              </div>
+              <div class="food-png-wrapper" data-tilt>
+                <img src="assets/truffle_pasta_item.png?v=4" alt="Black Truffle Tagliolini Pasta" class="food-png-img" loading="eager">
+              </div>
+            </div>
+
+            <!-- Food Item 3: Stone-Fired Rustica Diavola Pizza (PNG with Realistic Shadow) -->
+            <div class="signature-item item-left" data-speed="0.9">
+              <div class="food-png-wrapper" data-tilt>
+                <img src="assets/pizza_item.png?v=5" alt="Artisanal Stone-Fired Pizza" class="food-png-img" loading="eager">
+              </div>
+              <div class="signature-info">
+                <span class="item-cursive">Bespoke Stone Oven</span>
+                <h3 class="item-title">RUSTICA DIAVOLA</h3>
+                <p class="item-desc">72-hour cold-fermented wild yeast dough blistered at 480°C. San Marzano D.O.P. plum tomatoes, hand-torn Fior di Latte, artisanal spicy salame, hot honey drizzle, and fresh mountain oregano.</p>
+                <div class="item-meta">
+                  <span class="item-tag">STONE-FIRED PIZZA</span>
+                  <span class="item-price">€ 28</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Food Item 4: Charred Rosemary Bourbon Cocktail (PNG with Realistic Shadow) -->
+            <div class="signature-item item-right" data-speed="1.1">
+              <div class="signature-info">
+                <span class="item-cursive">The Alchemist's Glass</span>
+                <h3 class="item-title">SMOKED ROSEMARY SOUR</h3>
+                <p class="item-desc">Single-barrel Kentucky bourbon infused with smoked cherrywood, blood orange peel reduction, crystalline hand-carved ice sphere, and a torched garden rosemary sprig releasing fragrant aromatic smoke.</p>
+                <div class="item-meta">
+                  <span class="item-tag">ARTISANAL MIXOLOGY</span>
+                  <span class="item-price">€ 22</span>
+                </div>
+              </div>
+              <div class="food-png-wrapper" data-tilt>
+                <img src="assets/cocktail_item.png?v=4" alt="Smoked Rosemary Bourbon Cocktail" class="food-png-img" loading="eager">
+              </div>
+            </div>
+
+          </div><!-- /.signature-items-container -->
+        </div><!-- /.signature-container -->
+      </section>
+
+        <!-- ============================================================
+             SECTION 4.5: LE MENU DÉGUSTATION (CHEF'S TASTING JOURNEY)
+             Zero unnecessary boxes/borders - pure typography, gold accents, Poppins & Cursive
+             ============================================================ -->
+        <section class="degustation-section" id="degustation-section" aria-label="Chef's Tasting Menu">
+          <div class="degustation-header">
+            <span class="degustation-cursive">A Seven-Movement Symphony</span>
+            <h2 class="degustation-headline anim-section-title" aria-label="THE TASTING MENU">
+              <span class="anim-word-mask"><span class="anim-word-inner">THE</span></span>
+              <span class="anim-word-mask"><span class="anim-word-inner">TASTING</span></span>
+              <span class="anim-word-mask"><span class="anim-word-inner">MENU</span></span>
+            </h2>
+            <p class="degustation-sub">Crafted nightly by Master Chef Marc Laurent. An uncompromising expedition through wild alpine foraging, heritage embers, and Mediterranean harvests.</p>
+            <div class="degustation-price-badge">
+              <span class="degustation-price">€ 185</span>
+              <span class="degustation-pairing">SOMMELIER GRAND CRU PAIRING + € 95</span>
+            </div>
+          </div>
+
+          <div class="courses-list">
+            <div class="course-row">
+              <div class="course-meta">
+                <span class="course-num">FIRST</span>
+                <span class="course-tag">WELCOME BITE</span>
+              </div>
+              <div class="course-info">
+                <h3 class="course-title">HOP CRYSTAL &amp; OSIETRA CAVIAR</h3>
+                <p class="course-desc">Crisp wild hop blossom tartlet, whipped Normandy fresh cream, royal oscietra sturgeon caviar, sea buckthorn essence.</p>
+              </div>
+              <div class="course-wine">
+                <span class="wine-label">FOOD &amp; WINE PAIRING</span>
+                <span class="wine-name">Champagne Krug Grande Cuvée 170ème Édition</span>
+              </div>
+            </div>
+
+            <div class="course-row">
+              <div class="course-meta">
+                <span class="course-num">SECOND</span>
+                <span class="course-tag">COLD STARTER</span>
+              </div>
+              <div class="course-info">
+                <h3 class="course-title">ROYAL SEA BREAM CARPACCIO &amp; BLACK LIME</h3>
+                <p class="course-desc">Line-caught sea bream slivers, sun-dried Iranian black lime, emulsion of finger lime pearls, pressed marigold oil.</p>
+              </div>
+              <div class="course-wine">
+                <span class="wine-label">FOOD &amp; WINE PAIRING</span>
+                <span class="wine-name">Domaine Leflaive Puligny-Montrachet 2021</span>
+              </div>
+            </div>
+
+            <div class="course-row">
+              <div class="course-meta">
+                <span class="course-num">THIRD</span>
+                <span class="course-tag">ARTISAN PASTA</span>
+              </div>
+              <div class="course-info">
+                <h3 class="course-title">PINCHED RAVIOLINI WITH WHITE TRUFFLE</h3>
+                <p class="course-desc">Micro pinched egg parcels stuffed with roasted squab and sweet leeks, alpine churned butter glaze, wild white truffle veil.</p>
+              </div>
+              <div class="course-wine">
+                <span class="wine-label">FOOD &amp; WINE PAIRING</span>
+                <span class="wine-name">Gaja Barbaresco 2019, Piedmont</span>
+              </div>
+            </div>
+
+            <div class="course-row">
+              <div class="course-meta">
+                <span class="course-num">FOURTH</span>
+                <span class="course-tag">THE FISH</span>
+              </div>
+              <div class="course-info">
+                <h3 class="course-title">WILD SEA BASS ROASTED OVER OLIVE WOOD</h3>
+                <p class="course-desc">Wild sea bass seared over olive embers, sea fennel emulsion, blistered zucchini blossoms stuffed with smoked crab.</p>
+              </div>
+              <div class="course-wine">
+                <span class="wine-label">FOOD &amp; WINE PAIRING</span>
+                <span class="wine-name">Chassagne-Montrachet 1er Cru 'Morgeot' 2020</span>
+              </div>
+            </div>
+
+            <div class="course-row">
+              <div class="course-meta">
+                <span class="course-num">FIFTH</span>
+                <span class="course-tag">THE MAIN COURSE</span>
+              </div>
+              <div class="course-info">
+                <h3 class="course-title">WAGYU BEEF FLAMBÉED OVER VINE BRANCHES</h3>
+                <p class="course-desc">A5 Miyazaki Wagyu ribeye torched over dried grapevine embers, black garlic jus, fermented morel mushrooms, caramelized shallot tart.</p>
+              </div>
+              <div class="course-wine">
+                <span class="wine-label">FOOD &amp; WINE PAIRING</span>
+                <span class="wine-name">Château Margaux 1er Grand Cru Classé 2015</span>
+              </div>
+            </div>
+
+            <div class="course-row">
+              <div class="course-meta">
+                <span class="course-num">SIXTH</span>
+                <span class="course-tag">PRE-DESSERT</span>
+              </div>
+              <div class="course-info">
+                <h3 class="course-title">ABSINTHE GRANITA &amp; FROSTED APPLE</h3>
+                <p class="course-desc">Distilled Pontarlier absinthe snow, Granny Smith apple frost, crushed lemon verbena crystals.</p>
+              </div>
+              <div class="course-wine">
+                <span class="wine-label">FOOD &amp; WINE PAIRING</span>
+                <span class="wine-name">Cidre de Glace Domaine Neige Première</span>
+              </div>
+            </div>
+
+            <div class="course-row">
+              <div class="course-meta">
+                <span class="course-num">SEVENTH</span>
+                <span class="course-tag">THE SIGNATURE DESSERT</span>
+              </div>
+              <div class="course-info">
+                <h3 class="course-title">DARK SPHERE &amp; GOLD LEAF</h3>
+                <p class="course-desc">74% Porcelana smoked cacao dome, warm single-estate espresso reduction poured tableside, Madagascar bourbon vanilla velvet.</p>
+              </div>
+              <div class="course-wine">
+                <span class="wine-label">FOOD &amp; WINE PAIRING</span>
+                <span class="wine-name">Château d'Yquem Premier Cru Supérieur 2017</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============================================================
+             SECTION 5: THE TASTING EXPERIENCE & INVITATION
+             Border-free, immersive luxury typography & interactive reservation
+             ============================================================ -->
+        <section class="reservation-section" id="reservation-section" aria-label="Reservation & Experience">
+          <div class="reservation-content">
+            <span class="reservation-cursive">An evening to remember</span>
+            <h2 class="reservation-headline anim-section-title" aria-label="RESERVE YOUR TABLE">
+              <span class="anim-word-mask"><span class="anim-word-inner">RESERVE</span></span>
+              <span class="anim-word-mask"><span class="anim-word-inner">YOUR</span></span>
+              <span class="anim-word-mask"><span class="anim-word-inner">TABLE</span></span>
+            </h2>
+            <p class="reservation-sub">We welcome you to experience an evening of refined taste, warm embers, and culinary passion in the heart of our atelier dining room.</p>
+            
+            <div class="reservation-details">
+              <div class="detail-block">
+                <span class="detail-label">SERVICE HOURS</span>
+                <p class="detail-val">Tuesday – Sunday</p>
+                <p class="detail-subval">18:00 – 23:30</p>
+              </div>
+              <div class="detail-divider"></div>
+              <div class="detail-block">
+                <span class="detail-label">LOCATION</span>
+                <p class="detail-val">74 Rue de L'Artisan</p>
+                <p class="detail-subval">75001 Paris, France</p>
+              </div>
+              <div class="detail-divider"></div>
+              <div class="detail-block">
+                <span class="detail-label">PRIVATE DINING</span>
+                <p class="detail-val">concierge@lartisan.fr</p>
+                <p class="detail-subval">+33 1 42 68 55 00</p>
+              </div>
+            </div>
+
+            <div class="reservation-action">
+              <button class="reserve-btn" id="reserve-btn">
+                <span class="btn-text">BOOK AN EXPERIENCE</span>
+                <span class="btn-glow"></span>
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- LUXURY MINIMALIST FOOTER WITH HORIZONTAL WAVY DUAL-COLOR BACKGROUND -->
+        <footer class="restaurant-footer" id="restaurant-footer" aria-label="Restaurant Footer">
+          <!-- Horizontal wavy transition starting below Book An Experience button -->
+          <div class="footer-wavy-divider" aria-hidden="true">
+            <svg class="footer-wavy-svg" viewBox="0 0 1440 120" preserveAspectRatio="none" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="footer-dark-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#082a24" />
+                  <stop offset="50%" stop-color="#051d19" />
+                  <stop offset="100%" stop-color="#010908" />
+                </linearGradient>
+              </defs>
+              <!-- Top portion: Gradient color matching the section above -->
+              <rect width="1440" height="120" fill="url(#footer-dark-grad)" />
+              <!-- Lower portion: Yellow color flowing downwards with balanced waves -->
+              <path d="M 0,60 C 64.8,34 115.2,34 180.0,60 C 244.8,86 295.2,86 360.0,60 C 424.8,34 475.2,34 540.0,60 C 604.8,86 655.2,86 720.0,60 C 784.8,34 835.2,34 900.0,60 C 964.8,86 1015.2,86 1080.0,60 C 1144.8,34 1195.2,34 1260.0,60 C 1324.8,86 1375.2,86 1440.0,60 L 1440,120 L 0,120 Z" fill="#F5C03E" />
+              <!-- Horizontal wavy separation line from left to right -->
+              <path d="M 0,60 C 64.8,34 115.2,34 180.0,60 C 244.8,86 295.2,86 360.0,60 C 424.8,34 475.2,34 540.0,60 C 604.8,86 655.2,86 720.0,60 C 784.8,34 835.2,34 900.0,60 C 964.8,86 1015.2,86 1080.0,60 C 1144.8,34 1195.2,34 1260.0,60 C 1324.8,86 1375.2,86 1440.0,60" fill="none" stroke="#dfc181" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </div>
+
+          <!-- Extended Yellow Background continuing all the way to the site feet/bottom -->
+          <div class="footer-yellow-body">
+            <div class="footer-inner">
+              <div class="footer-top-row">
+                <div class="footer-brand-block">
+                  <div class="footer-brand">
+                    <span class="footer-cursive">L'Artisan</span>
+                    <span class="footer-title">FINE DINING</span>
+                  </div>
+                  <p class="footer-tagline">An intimate dialogue between fire, heritage produce &amp; artisanal gastronomy.</p>
+                </div>
+
+                <div class="footer-nav-col">
+                  <span class="footer-col-title">SERVICE HOURS</span>
+                  <p class="footer-col-text">Tuesday – Sunday<br>18:00 – 23:30</p>
+                </div>
+
+                <div class="footer-nav-col">
+                  <span class="footer-col-title">LOCATION</span>
+                  <p class="footer-col-text">74 Rue de L'Artisan<br>75001 Paris, France</p>
+                </div>
+
+                <div class="footer-nav-col">
+                  <span class="footer-col-title">INQUIRIES</span>
+                  <p class="footer-col-text">+33 1 42 68 55 00<br>concierge@lartisan.fr</p>
+                </div>
+              </div>
+
+              <div class="footer-bottom-row">
+                <p class="footer-copy">© 2026 L'Artisan Restaurant Atelier. All rights reserved.</p>
+                <div class="footer-links">
+                  <span>Privacy Policy</span>
+                  <span class="footer-link-dot">•</span>
+                  <span>Terms of Service</span>
+                  <span class="footer-link-dot">•</span>
+                  <span>Michelin Guide Selection</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </section>
+  </div>
+
+  <!-- Interactive Luxury Reservation Modal -->
+  <div class="reservation-modal-backdrop" id="reservation-modal" aria-hidden="true" role="dialog">
+    <div class="modal-card">
+      <button class="modal-close-btn" id="modal-close-btn" aria-label="Close modal">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+
+      <div class="modal-body-content" id="modal-form-view">
+        <div class="modal-header">
+          <span class="modal-cursive">Intimate &amp; Exclusive</span>
+          <h3 class="modal-title">RESERVE YOUR TABLE</h3>
+          <p class="modal-sub">Experience culinary poetry at L'Artisan. Tables are reserved up to 30 days in advance.</p>
+        </div>
+
+        <form class="booking-form" id="booking-form">
+          <!-- Step 1: Party Size -->
+          <div class="form-group">
+            <label class="form-label">PARTY SIZE</label>
+            <div class="guest-selector">
+              <button type="button" class="guest-btn" data-guests="1">1</button>
+              <button type="button" class="guest-btn active" data-guests="2">2</button>
+              <button type="button" class="guest-btn" data-guests="3">3</button>
+              <button type="button" class="guest-btn" data-guests="4">4</button>
+              <button type="button" class="guest-btn" data-guests="5">5</button>
+              <button type="button" class="guest-btn" data-guests="6">6</button>
+              <button type="button" class="guest-btn" data-guests="8+">8+ Private</button>
+            </div>
+          </div>
+
+          <!-- Step 2: Date Selection -->
+          <div class="form-group">
+            <label class="form-label">DATE</label>
+            <div class="date-selector">
+              <button type="button" class="date-pill active" data-date="Tonight">Tonight</button>
+              <button type="button" class="date-pill" data-date="Tomorrow">Tomorrow</button>
+              <button type="button" class="date-pill" data-date="Friday, Oct 16">Friday, Oct 16</button>
+              <button type="button" class="date-pill" data-date="Saturday, Oct 17">Saturday, Oct 17</button>
+            </div>
+          </div>
+
+          <!-- Step 3: Seating Time -->
+          <div class="form-group">
+            <label class="form-label">EVENING SEATING</label>
+            <div class="time-selector">
+              <button type="button" class="time-pill" data-time="18:30">18:30</button>
+              <button type="button" class="time-pill" data-time="19:15">19:15</button>
+              <button type="button" class="time-pill active" data-time="20:00">20:00</button>
+              <button type="button" class="time-pill" data-time="20:45">20:45</button>
+              <button type="button" class="time-pill" data-time="21:30">21:30</button>
+            </div>
+          </div>
+
+          <!-- Step 4: Culinary Experience -->
+          <div class="form-group">
+            <label class="form-label">EXPERIENCE TYPE</label>
+            <div class="exp-selector">
+              <label class="exp-card active">
+                <input type="radio" name="experience" value="degustation" checked>
+                <div class="exp-details">
+                  <span class="exp-name">THE TASTING MENU</span>
+                  <span class="exp-note">Chef's 7-Course Journey · €185 / guest</span>
+                </div>
+              </label>
+              <label class="exp-card">
+                <input type="radio" name="experience" value="alacarte">
+                <div class="exp-details">
+                  <span class="exp-name">À LA CARTE SELECTION</span>
+                  <span class="exp-note">Personal selection from the hearth &amp; pasta bar</span>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <!-- Step 5: Guest Information -->
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label class="form-label">FULL NAME</label>
+              <input type="text" class="form-input" id="guest-name" placeholder="Mr. / Ms." required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">PHONE NUMBER</label>
+              <input type="tel" class="form-input" id="guest-phone" placeholder="+33 6 00 00 00 00" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">DIETARY REQUIREMENTS &amp; SPECIAL REQUESTS</label>
+            <input type="text" class="form-input" id="guest-notes" placeholder="E.g. Pescatarian, Anniversary, Corner Booth...">
+          </div>
+
+          <button type="submit" class="modal-submit-btn" id="confirm-booking-btn">
+            <span>CONFIRM RESERVATION</span>
+          </button>
+        </form>
+      </div>
+
+      <!-- Success Confirmation View -->
+      <div class="modal-body-content hidden-view" id="modal-success-view">
+        <div class="success-crest">
+          <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="32" cy="32" r="30" stroke="#dfc181" stroke-width="2"/>
+            <path d="M20 33L28 41L44 23" stroke="#dfc181" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <span class="modal-cursive">Welcome to L'Artisan</span>
+        <h3 class="modal-title">RESERVATION CONFIRMED</h3>
+        <p class="modal-sub">We look forward to welcoming you for an evening of exceptional gastronomy.</p>
+        
+        <div class="booking-summary-ticket">
+          <div class="summary-line">
+            <span class="summary-lbl">CONFIRMATION REF</span>
+            <span class="summary-val" id="summary-ref">ART-8942-PARIS</span>
+          </div>
+          <div class="summary-line">
+            <span class="summary-lbl">PARTY &amp; SEATING</span>
+            <span class="summary-val" id="summary-party">2 Guests · Tonight at 20:00</span>
+          </div>
+          <div class="summary-line">
+            <span class="summary-lbl">EXPERIENCE</span>
+            <span class="summary-val" id="summary-exp">The Tasting Menu (7 Courses)</span>
+          </div>
+          <div class="summary-line">
+            <span class="summary-lbl">GUEST</span>
+            <span class="summary-val" id="summary-guest">Honored Guest</span>
+          </div>
+        </div>
+
+        <button type="button" class="modal-submit-btn" id="close-confirmed-btn">
+          <span>RETURN TO SITE</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scroll Tracks Driving Continuous Page Scroll -->
+  <div class="scroll-track-wrapper">
+    <section class="scroll-track" id="track-1" aria-label="Section 1: Burger Atelier"></section>
+    <section class="scroll-track" id="track-transition" aria-label="Section Transition"></section>
+    <section class="scroll-track" id="track-2" aria-label="Section 2: Stone-Fired Pizza"></section>
+    <section class="scroll-track" id="track-3" aria-label="Section 3: Wave Section"></section>
+  </div>
+
+  <script src="app.js?v=36"></script>
+</body>
+</html>
